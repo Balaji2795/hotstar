@@ -105,17 +105,18 @@ pipeline {
 
     stages {
 
-        stage('Git Checkout') {
-            steps {
-                checkout scmGit(
-                    branches: [[name: '*/master']],
-                    userRemoteConfigs: [[
-                        credentialsId: 'naveencred',
-                        url: 'https://github.com/naveennallamsetti/hotstar.git'
-                    ]]
-                )
-            }
-        }
+
+         stage('Git Checkout') {
+             steps {
+                 checkout scmGit(
+                     branches: [[name: '*/master']],
+                     userRemoteConfigs: [[
+                         credentialsId: 'naveencred',
+                         url: 'https://github.com/naveennallamsetti/hotstar.git'
+                     ]]
+                 )
+             }
+         }
 
         stage('Validate') {
             steps {
