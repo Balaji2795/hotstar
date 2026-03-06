@@ -1,42 +1,61 @@
-pipeline{
+pipeline {
     agent any
+
     stages {
-        stage (' git checkout ') {
+
+        stage('Git Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'naveencred', url: 'https://github.com/naveennallamsetti/hotstar.git']])
+                checkout scmGit(
+                    branches: [[name: '*/master']],
+                    userRemoteConfigs: [[
+                        credentialsId: 'naveencred',
+                        url: 'https://github.com/naveennallamsetti/hotstar.git'
+                    ]]
+                )
             }
         }
-        stage ('STAGE VALIDATE') {
+
+        stage('Validate') {
             steps {
                 sh 'mvn validate'
             }
         }
-        stage ('STAGE COMPILE') {
+
+        stage('Compile') {
             steps {
                 sh 'mvn compile'
             }
         }
-        stage ('STAGE TEST') {
+
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage ('STAGE PACKAGE') {
+
+        stage('Package') {
             steps {
                 sh 'mvn package'
             }
         }
-      stage('Docker Image Build') {
+
+        stage('Docker Build') {
             steps {
-                sh 'docker rmi project1 || true'
-                sh 'docker build -t project1 .'
+                sh '''
+                docker rmi project1 || true
+                docker build -t project1 .
+                '''
             }
         }
+
         stage('Deploy Container') {
             steps {
-                sh 'docker rm project1-container -f || true'
-                sh 'docker run -d -p 8093:8080 --name project1-container project1'
+                sh '''
+                docker rm -f project1-container || true
+                docker run -d -p 8093:8080 --name project1-container project1
+                '''
             }
         }
+
     }
 }
