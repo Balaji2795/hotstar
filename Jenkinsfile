@@ -77,8 +77,8 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh """
-                docker rm -f project1-container || true
-                docker run -d -p 8093:8080 --name project1-container ${DOCKER_IMAGE}:${IMAGE_TAG}
+                docker rm -f balajicontainer || true
+                docker run -d -p 8084:8080 --name balajicontainer ${DOCKER_IMAGE}:${IMAGE_TAG}
                 """
             }
         }
