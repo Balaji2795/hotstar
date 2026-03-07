@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "naveennallamsetti/docker-my-images"
+        DOCKER_IMAGE = "balaji2795/dockerhotstar"
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
@@ -13,8 +13,8 @@ pipeline {
                 checkout scmGit(
                     branches: [[name: '*/master']],
                     userRemoteConfigs: [[
-                        credentialsId: 'naveencred',
-                        url: 'https://github.com/naveennallamsetti/hotstar.git'
+                        credentialsId: 'docker',
+                        url: 'https://github.com/Balaji2795/hotstar.git'
                     ]]
                 )
             }
